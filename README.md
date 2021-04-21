@@ -1,4 +1,6 @@
-# tree-thoughts
+# Tree Thoughts
+
+A project in collab with @caioliveira277
 
 ## Project setup
 ```

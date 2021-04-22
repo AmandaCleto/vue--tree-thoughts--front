@@ -1,6 +1,7 @@
 <template>
   <div class="input">
-    <input type="email" name="" id="">
+    <label :for="type">{{label}}</label>
+    <input :type="type" name="email" :placeholder="placeholder" :id="type">
   </div>
 </template>
 
@@ -8,7 +9,9 @@
 export default {
   name: 'input',
   props: {
-    msg: String
+    placeholder: String,
+    type: String,
+    label: String,
   }
 }
 </script>

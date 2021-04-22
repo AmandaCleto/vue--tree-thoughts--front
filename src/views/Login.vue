@@ -6,8 +6,8 @@
           <p class="informative">Acesse sua conta para continuar.</p>
       </template>
       <template v-slot:inputs>
-        <Input />
-        <Input />
+        <Input label="E-mail" placeholder="Informe o seu email" type="email"/>
+        <Input label="Senha" placeholder="Informe a sua senha" type="password"/>
       </template>
       <template v-slot:button_action>
           <button class="button_enter">Entrar</button>

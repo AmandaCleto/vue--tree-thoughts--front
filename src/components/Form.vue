@@ -16,9 +16,6 @@
 <script>
 export default {
   name: 'Form',
-  props: {
-    msg: String
-  }
 }
 </script>
 

@@ -1,19 +1,21 @@
 <template>
-  <main class="login">
+  <main class="register">
     <Form>
       <template v-slot:header>
           <h1 class="greedings">Olá, bem-vindo ao TreeToughts</h1>
-          <p class="informative">Acesse sua conta para continuar.</p>
+          <p class="informative">Cadastre-se para começar.</p>
       </template>
       <template v-slot:inputs>
+        <Input label="Nome" type="text"/>
         <Input label="E-mail" type="email"/>
         <Input label="Senha" type="password"/>
+        <Input label="Confirmar Senha" type="password"/>
       </template>
       <template v-slot:button_action>
-          <button class="button_enter">Entrar</button>
+          <button class="button_enter">Cadastrar</button>
       </template>
       <template v-slot:footer>
-        <p>Não possui uma conta? <a href="#">Clique aqui</a></p>
+        <p class="footer">Já tem uma conta? <a href="#">Clique aqui</a></p>
       </template>
     </Form>
   </main>
@@ -25,7 +27,7 @@ import Form from '@/components/Form.vue'
 import Input from '@/components/Input.vue'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   components: {
     Form, Input
   },
@@ -37,7 +39,7 @@ export default {
 
 <style lang="scss" scoped>
   main {
-    background: url('~@/assets/background.svg') center bottom no-repeat, 
+    background: url('~@/assets/background.svg') center bottom no-repeat,
       linear-gradient(360deg, #F7F4EA 41.21%, #EDEDED 90.08%);
     display: flex;
     justify-content: center;

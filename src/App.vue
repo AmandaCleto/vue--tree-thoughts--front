@@ -13,4 +13,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .container {
+    width: 100%;
+    max-width: 1140px;
+  }
 </style>

@@ -12,10 +12,10 @@
         <Input label="Confirmar Senha" type="password"/>
       </template>
       <template v-slot:button_action>
-          <button class="button_enter">Cadastrar</button>
+          <button class="button_enter" v-on:click="login">Cadastrar</button>
       </template>
       <template v-slot:footer>
-        <p class="footer">Já tem uma conta? <a href="#">Clique aqui</a></p>
+        <p class="footer">Já tem uma conta? <a href="#" v-on:click.prevent="login">Clique aqui</a></p>
       </template>
     </Form>
   </main>
@@ -25,6 +25,7 @@
 // @ is an alias to /src
 import Form from '@/components/Form.vue'
 import Input from '@/components/Input.vue'
+import router from '@/router'
 
 export default {
   name: 'Register',
@@ -32,7 +33,10 @@ export default {
     Form, Input
   },
   setup () {
-    return {}
+    function login() {
+       router.push({ name: 'Panel' })
+    }
+    return { login }
   }
 }
 </script>

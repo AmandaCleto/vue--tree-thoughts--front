@@ -10,10 +10,10 @@
         <Input label="Senha" type="password"/>
       </template>
       <template v-slot:button_action>
-          <button class="button_enter">Entrar</button>
+          <button class="button_enter" v-on:click="login">Entrar</button>
       </template>
       <template v-slot:footer>
-        <p>Não possui uma conta? <a href="#">Clique aqui</a></p>
+        <p>Não possui uma conta? <a href="#" v-on:click.prevent="register">Clique aqui</a></p>
       </template>
     </Form>
   </main>
@@ -23,6 +23,7 @@
 // @ is an alias to /src
 import Form from '@/components/Form.vue'
 import Input from '@/components/Input.vue'
+import router from '@/router'
 
 export default {
   name: 'Login',
@@ -30,14 +31,20 @@ export default {
     Form, Input
   },
   setup () {
-    return {}
+    function login() {
+       router.push({ name: 'Panel' })
+    }
+    function register() {
+       router.push({ name: 'Register' })
+    }
+    return { login, register }
   }
 }
 </script>
 
 <style lang="scss" scoped>
   main {
-    background: url('~@/assets/background.svg') center bottom no-repeat, 
+    background: url('~@/assets/background.svg') center bottom no-repeat,
       linear-gradient(360deg, #F7F4EA 41.21%, #EDEDED 90.08%);
     display: flex;
     justify-content: center;

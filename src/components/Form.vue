@@ -70,6 +70,7 @@ export default {
       font-weight: bold;
       margin-bottom: 20px;
       color: #2E2E2E;
+      cursor: pointer;
     }
     .button_enter:hover {
       background-color: $color-undefined;

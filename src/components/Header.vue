@@ -2,10 +2,13 @@
   <header>
       <div class="container">
         <figure>
-          <img :src="teste" :alt="`Imagem de perfil de ${name}`">
+          <img src="../assets/logo.svg" alt="Logo Tree-Thoghts">
+        </figure>
+        <figure>
           <figcaption>
             {{name}}
           </figcaption>
+          <img src="../assets/mikasa.png" :alt="`Imagem de perfil de ${name}`">
         </figure>
       </div>
   </header>
@@ -19,11 +22,6 @@ export default {
       type: String,
       require: true
     }
-  },
-  data() {
-    return {
-      teste: require('../assets/profile.png')
-    }
   }
 }
 </script>
@@ -32,8 +30,24 @@ export default {
   header {
     background-color: $theme-green-strong;
     height: 80px;
-    div {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    .container {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1140px;
+      width: 100%;
+      figure {
+        display: flex;
+        align-items: center;
+        figcaption {
+          color: #fff;
+          margin-right: 15px;
+          font-size: 20px;
+        }
+      }
     }
   }
 </style>

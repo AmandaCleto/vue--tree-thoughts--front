@@ -30,7 +30,7 @@ export default {
   header {
     background-color: $theme-green-strong;
     height: 80px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
     .container {

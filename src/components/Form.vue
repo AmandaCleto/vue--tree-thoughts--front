@@ -73,7 +73,7 @@ export default {
       cursor: pointer;
     }
     .button_enter:hover {
-      background-color: $color-undefined;
+      background-color: $color-light-undefined;
     }
 
     a {
@@ -81,7 +81,7 @@ export default {
     }
 
     a:hover {
-      color: $color-undefined;
+      color: $color-light-undefined;
     }
   }
 }

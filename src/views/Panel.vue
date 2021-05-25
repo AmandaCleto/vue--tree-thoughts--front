@@ -1,93 +1,129 @@
 <template>
-  <main>
-    <Header name="Amanda Ackerman"/>
-    <section class="container">
-      <div class="card-new-thought">
-        <svg width="47" height="62" viewBox="0 0 47 62" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1.01514 59.6263V59.6259V8.18457C1.01514 6.29598 1.76538 4.48475 3.10081 3.14931C4.43625 1.81388 6.24748 1.06364 8.13607 1.06364H38.6198C40.5084 1.06364 42.3196 1.81388 43.6551 3.14931C44.9905 4.48475 45.7408 6.29598 45.7408 8.18457V59.6259V59.6263C45.7409 59.8703 45.6776 60.1101 45.5569 60.3222C45.4362 60.5343 45.2624 60.7113 45.0525 60.8359C44.8426 60.9604 44.6039 61.0281 44.36 61.0323C44.116 61.0366 43.8751 60.9772 43.661 60.8601L43.6605 60.8598L23.6174 49.9237L23.3779 49.7931L23.1385 49.9237L3.0954 60.8598L3.09488 60.8601C2.88081 60.9772 2.63992 61.0366 2.39593 61.0323C2.15195 61.0281 1.91327 60.9604 1.7034 60.8359C1.49352 60.7113 1.31969 60.5343 1.19901 60.3222C1.07833 60.1101 1.01496 59.8703 1.01514 59.6263ZM25.7832 17.7107C25.7832 17.0728 25.5298 16.4611 25.0787 16.01C24.6276 15.5589 24.0159 15.3055 23.3779 15.3055C22.74 15.3055 22.1283 15.5589 21.6772 16.01C21.2261 16.4611 20.9727 17.0728 20.9727 17.7107V22.9264H15.757C15.1191 22.9264 14.5073 23.1799 14.0563 23.6309C13.6052 24.082 13.3518 24.6938 13.3518 25.3317C13.3518 25.9696 13.6052 26.5814 14.0563 27.0324C14.5073 27.4835 15.1191 27.7369 15.757 27.7369H20.9727V32.9526C20.9727 33.5905 21.2261 34.2023 21.6772 34.6534C22.1283 35.1044 22.74 35.3578 23.3779 35.3578C24.0159 35.3578 24.6276 35.1044 25.0787 34.6534C25.5298 34.2023 25.7832 33.5905 25.7832 32.9526V27.7369H30.9989C31.6368 27.7369 32.2486 27.4835 32.6996 27.0324C33.1507 26.5814 33.4041 25.9696 33.4041 25.3317C33.4041 24.6938 33.1507 24.082 32.6996 23.6309C32.2486 23.1799 31.6368 22.9264 30.9989 22.9264H25.7832V17.7107Z" fill="#2E2E2E" fill-opacity="0.25" stroke="black"/>
-        </svg>
-      </div>
-      <Card color="happiness">
-        <template v-slot:thought>
-          <div>
-              <p>Hoje eu comi um lanche maravilhoso 😋</p>
-              <p>Perdi no bilhar 👆🏻👆🏻, para ELE 👈🏻👈🏻</p>
-          </div>
-        </template>
-      </Card>
-      <Card>
-        <template v-slot:thought>
-          <div>
-              <p>Hoje eu comi um lanche maravilhoso 😋</p>
-              <p>Perdi no bilhar 👆🏻👆🏻, para ELE 👈🏻👈🏻</p>
-              <p>Comi chocolate 😋. E agora to codando 😎</p>
-          </div>
-        </template>
-      </Card>
-      <Card>
-        <template v-slot:thought>
-          <div>
-              <p>Hoje eu comi um lanche maravilhoso 😋</p>
-              <p>Perdi no bilhar 👆🏻👆🏻, para ELE 👈🏻👈🏻</p>
-              <p>Comi chocolate 😋. E agora to codando 😎</p>
-          </div>
-        </template>
-      </Card>
-    </section>
-  </main>
+    <main>
+        <Header name="Amanda Ackerman" />
+
+        <section class="container">
+            <transition name="flip" mode="out-in">
+                <div
+                    class="card-new-thought"
+                    v-if="!state.flipAdd"
+                    color="anger"
+                    @click="state.flipAdd = !state.flipAdd"
+                >
+                    <svg
+                        width="47"
+                        height="62"
+                        viewBox="0 0 47 62"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M1.01514 59.6263V59.6259V8.18457C1.01514 6.29598 1.76538 4.48475 3.10081 3.14931C4.43625 1.81388 6.24748 1.06364 8.13607 1.06364H38.6198C40.5084 1.06364 42.3196 1.81388 43.6551 3.14931C44.9905 4.48475 45.7408 6.29598 45.7408 8.18457V59.6259V59.6263C45.7409 59.8703 45.6776 60.1101 45.5569 60.3222C45.4362 60.5343 45.2624 60.7113 45.0525 60.8359C44.8426 60.9604 44.6039 61.0281 44.36 61.0323C44.116 61.0366 43.8751 60.9772 43.661 60.8601L43.6605 60.8598L23.6174 49.9237L23.3779 49.7931L23.1385 49.9237L3.0954 60.8598L3.09488 60.8601C2.88081 60.9772 2.63992 61.0366 2.39593 61.0323C2.15195 61.0281 1.91327 60.9604 1.7034 60.8359C1.49352 60.7113 1.31969 60.5343 1.19901 60.3222C1.07833 60.1101 1.01496 59.8703 1.01514 59.6263ZM25.7832 17.7107C25.7832 17.0728 25.5298 16.4611 25.0787 16.01C24.6276 15.5589 24.0159 15.3055 23.3779 15.3055C22.74 15.3055 22.1283 15.5589 21.6772 16.01C21.2261 16.4611 20.9727 17.0728 20.9727 17.7107V22.9264H15.757C15.1191 22.9264 14.5073 23.1799 14.0563 23.6309C13.6052 24.082 13.3518 24.6938 13.3518 25.3317C13.3518 25.9696 13.6052 26.5814 14.0563 27.0324C14.5073 27.4835 15.1191 27.7369 15.757 27.7369H20.9727V32.9526C20.9727 33.5905 21.2261 34.2023 21.6772 34.6534C22.1283 35.1044 22.74 35.3578 23.3779 35.3578C24.0159 35.3578 24.6276 35.1044 25.0787 34.6534C25.5298 34.2023 25.7832 33.5905 25.7832 32.9526V27.7369H30.9989C31.6368 27.7369 32.2486 27.4835 32.6996 27.0324C33.1507 26.5814 33.4041 25.9696 33.4041 25.3317C33.4041 24.6938 33.1507 24.082 32.6996 23.6309C32.2486 23.1799 31.6368 22.9264 30.9989 22.9264H25.7832V17.7107Z"
+                            fill="#2E2E2E"
+                            fill-opacity="0.25"
+                            stroke="black"
+                        />
+                    </svg>
+                </div>
+
+                <Card
+                    v-else
+                    color="undefined"
+                    @click="state.flipAdd = !state.flipAdd"
+                >
+                </Card>
+            </transition>
+
+            <Card
+                color="happiness"
+                message="Hoje eu comi um lanche maravilhoso 😋. &#10;Perdi no bilhar 👆🏻👆🏻, para ELE 👈🏻👈🏻"
+                v-for="item in Array(5)"
+                :key="item"
+            ></Card>
+        </section>
+        <Mask />
+    </main>
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import Card from '@/components/Card.vue';
+import { reactive } from "vue";
+import { Header, Card, Mask } from "@/components";
 export default {
-  name: 'Panel',
-  components: {
-    Header,
-    Card
-  },
-  setup () {
-
-    return {}
-  },
-  
-}
+    name: "Panel",
+    components: {
+        Header,
+        Card,
+        Mask,
+    },
+    setup() {
+        const state = reactive({
+            flipAdd: false,
+        });
+        return { state };
+    },
+};
 </script>
 
 <style lang="scss" scoped>
-  main {
-    background: url('~@/assets/background.svg') center top no-repeat,
-      url('~@/assets/background-repeat.svg') center 75px repeat-y;
+main {
+    background: url("~@/assets/background.svg") center top no-repeat,
+        url("~@/assets/background-repeat.svg") center 75px repeat-y;
     display: flex;
     align-items: center;
     flex-direction: column;
     .container {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 992px;
-      background: rgba(247, 244, 234, 0.45);
-      backdrop-filter: blur(15px);
-      padding: 65px 40px;
-
-      .card-new-thought {
-        background: url('~@/assets/new-thought.svg') no-repeat center;
-        border-radius: 5px;
-        width: 450px;
-        height: 270px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        svg {
-          transition: all 300ms;
+        flex-direction: column;
+        width: 100%;
+        max-width: 992px;
+        background: rgba(247, 244, 234, 0.45);
+        backdrop-filter: blur(15px);
+        padding: 65px 40px;
+
+        .card-new-thought {
+            background: url("~@/assets/new-thought.svg") no-repeat center;
+            border-radius: 5px;
+            width: 450px;
+            height: 270px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            svg {
+                transition: all 300ms;
+            }
+            &:hover {
+                svg {
+                    transform: scale(1.2);
+                }
+            }
         }
-        &:hover {
-          svg {
-            transform: scale(1.2);
-          }
-        }
-      }
     }
-  }
+
+    @keyframes flip-out {
+        from {
+            transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(90deg);
+        }
+    }
+    @keyframes flip-in {
+        from {
+            transform: rotateY(90deg);
+        }
+        to {
+            transform: rotateY(0deg);
+        }
+    }
+
+    .flip-enter-active {
+        animation: flip-in 0.3s ease;
+    }
+
+    .flip-leave-active {
+        animation: flip-out 0.3s ease;
+    }
+}
 </style>

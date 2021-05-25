@@ -1,15 +1,15 @@
 <template>
-  <h1>uai, acho q teria oq aqui?</h1>
+    <h1>🚀🚀🚀</h1>
 </template>
 
 <script>
 // @ is an alias to /src
 
 export default {
-  name: 'Home',
-}
+    name: "Home",
+};
 </script>
 
+
 <style scoped lang="scss">
- 
 </style>

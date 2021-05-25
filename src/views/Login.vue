@@ -21,8 +21,7 @@
 
 <script>
 // @ is an alias to /src
-import Form from '@/components/Form.vue'
-import Input from '@/components/Input.vue'
+import { Form, Input } from '@/components'
 import router from '@/router'
 
 export default {

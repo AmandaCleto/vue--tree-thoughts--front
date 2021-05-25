@@ -14,7 +14,7 @@
 import { reactive } from 'vue';
 
 export default {
-  name: 'input',
+  name: 'Input',
   props: {
     label: String,
     type: String,

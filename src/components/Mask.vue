@@ -1,24 +1,31 @@
 <template>
-	<teleport to="body">
-		<div class="mask" @click="$emit('handlerMask', {state: true})"></div>
-	</teleport>
+	<div
+		class="mask"
+		v-show="store.state.card.showMaskEditMode"
+		@click="store.commit('changeCardState', false)">
+	</div>
 </template>
 <script>
+import { useStore } from 'vuex';
 export default {
 	name: 'Mask',
-	emits: ['handlerMask']
+	setup() {
+		const store = useStore();
+		return {
+			store
+		}
+	}
 }
 </script>
 <style lang="scss" scoped>
 	.mask {
 		// background: transparent;
-		background: purple;
+		background: #80008063;
 		position: fixed;
-		width: 10vw;
-		height: 100vh;
+		width: 100%;
+		height: 100%;
 		top: 0;
 		right: 0;
 		z-index: 10;
-		// pointer-events: none;
 	}
 </style>

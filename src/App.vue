@@ -23,25 +23,17 @@
         align-self: center;
     }
 
-    // & > .group {
-    //     display: contents;
-		
-	& > :nth-of-type(even) {
-		.separator {
-			background: url("~@/assets/line-dashed-left.svg") no-repeat;
-		}
-		.card {
-			align-self: flex-end;
-		}
+	& > .separator:nth-of-type(even) {
+        background: url("~@/assets/line-dashed-right.svg") no-repeat;
+    }
+	& > .card:nth-of-type(even) {
+        align-self: flex-end;
 	}
-	& > :nth-of-type(odd) {
-		.separator {
-			background: url("~@/assets/line-dashed-right.svg") no-repeat;
-		}
-		.card {
-			align-self: flex-start;
-		}
+	& > .separator:nth-of-type(odd) {
+        background: url("~@/assets/line-dashed-left.svg") no-repeat;
+    }
+	& > .card:nth-of-type(odd) {
+        align-self: flex-start;
 	}
-    // }
 }
 </style>

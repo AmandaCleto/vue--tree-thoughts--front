@@ -1,6 +1,6 @@
 <template>
     <span class="separator"></span>
-    <div class="card" :class="[state.color]">
+    <div class="card" :class="[state.color, state.editMode ? 'floatMask':'']">
         <textarea
             ref="textareaRef"
             name="message"
@@ -53,8 +53,9 @@
 
 <script>
 import { reactive, ref, watch } from "vue";
+import { useStore } from 'vuex';
 export default {
-    name: "Form",
+    name: "Card",
     props: {
         color: {
             type: String,
@@ -62,7 +63,7 @@ export default {
         },
         message: {
             type: String,
-            default: "undefined",
+            default: "",
         },
     },
     setup(props) {
@@ -70,18 +71,24 @@ export default {
             editMode: false,
 			color: props.color
         });
+        const store = useStore();
 		const textareaRef = ref(null);
 
-		watch(() => state.editMode, () => {
-			if(state.editMode) {
-                /* changed state to editing mode */
+		watch(() => state.editMode, (value) => {
+			if(value) {
 				textareaRef.value.removeAttribute('readonly');
 				textareaRef.value.focus();
 			} else {
 				textareaRef.value.setAttribute('readonly', true);
 			}
+            store.commit('changeCardState', value);
+		});
 
-		})
+        watch(() => store.state.card.showMaskEditMode, (value) => {
+            if(!value) {
+                state.editMode = false;
+            }
+        });
 
         function handlerEditMode() {
             state.editMode = !state.editMode;
@@ -170,6 +177,10 @@ export default {
           border: 1px solid #fff;
            caret-color:$theme-green-strong;
         }
+    }
+
+    &.floatMask {
+        z-index: 15;
     }
 
     &.card::before {

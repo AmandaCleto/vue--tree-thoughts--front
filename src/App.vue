@@ -14,6 +14,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+body {
+    overflow-x: hidden;
+}
 .container {
     width: 100%;
     max-width: 1140px;
@@ -36,4 +39,50 @@
         align-self: flex-start;
 	}
 }
+
+
+//colors
+.undefined {
+    background-color: $color-light-undefined;
+    &::before {
+        background-color: $color-undefined;
+    }
+}
+.love {
+    background-color: $color-light-love;
+    &::before {
+        background-color: $color-love;
+    }
+}
+.anger {
+    background-color: $color-light-anger;
+    &::before {
+        background-color: $color-anger;
+    }
+}
+.happiness {
+    background-color: $color-light-happiness;
+    &::before {
+        background-color: $color-happiness;
+    }
+}
+.sadness {
+    background-color: $color-light-sadness;
+    &::before {
+        background-color: $color-sadness;
+    }
+}
+.fear {
+    background-color: $color-light-fear;
+    &::before {
+        background-color: $color-fear;
+    }
+}
+.disgusted {
+    background-color: $color-light-disgusted;
+    &::before {
+        background-color: $color-disgusted;
+    }
+}
+
 </style>

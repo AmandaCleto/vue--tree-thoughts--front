@@ -2,13 +2,12 @@
     <main>
         <Header name="Amanda Ackerman" />
 
-        <section class="container">
+        <section class="container" ref="teste">
             <transition name="flip" mode="out-in">
                 <div
                     class="card-new-thought"
-                    v-if="!state.flipAdd"
-                    color="anger"
-                    @click="state.flipAdd = !state.flipAdd"
+                    v-if="state.flipAdd"
+                    @click="flipCard()"
                 >
                     <svg
                         width="47"
@@ -26,40 +25,102 @@
                     </svg>
                 </div>
 
-                <Card
-                    v-else
-                    color="undefined"
-                    @click="state.flipAdd = !state.flipAdd"
-                >
-                </Card>
+                <div v-else class="card-new-thought-on">
+                    <textarea
+                        name="card-new-thought-on"
+                        cols="30"
+                        rows="10"
+                        placeholder="Qual a novidade? Conte ai!"
+                    ></textarea>
+                    <div class="buttons">
+                        <pick-color />
+
+                        <div class="confirmation">
+                            <button type="button" class="icon">
+                                <svg
+                                    width="13"
+                                    height="12"
+                                    viewBox="0 0 13 12"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M0.25096 0.261676C0.411698 0.100986 0.629676 0.0107157 0.85696 0.0107157C1.08424 0.0107157 1.30222 0.100986 1.46296 0.261676L5.99982 4.79853L10.5367 0.261676C10.6157 0.17981 10.7103 0.114511 10.8149 0.0695886C10.9195 0.0246666 11.0319 0.00102135 11.1458 3.23629e-05C11.2596 -0.000956623 11.3724 0.0207306 11.4778 0.0638285C11.5831 0.106926 11.6788 0.170572 11.7593 0.251051C11.8398 0.331531 11.9034 0.427232 11.9465 0.532572C11.9896 0.637912 12.0113 0.75078 12.0103 0.864591C12.0093 0.978402 11.9857 1.09088 11.9408 1.19545C11.8958 1.30003 11.8305 1.39461 11.7487 1.47368L7.21182 6.01053L11.7487 10.5474C11.9048 10.709 11.9912 10.9256 11.9893 11.1503C11.9873 11.375 11.8972 11.59 11.7382 11.7489C11.5793 11.9079 11.3643 11.998 11.1396 12C10.9148 12.0019 10.6983 11.9155 10.5367 11.7594L5.99982 7.22253L1.46296 11.7594C1.3013 11.9155 1.08478 12.0019 0.860044 12C0.635304 11.998 0.420322 11.9079 0.261401 11.7489C0.10248 11.59 0.0123351 11.375 0.0103821 11.1503C0.00842921 10.9256 0.0948244 10.709 0.25096 10.5474L4.78782 6.01053L0.25096 1.47368C0.0902704 1.31294 0 1.09496 0 0.867676C0 0.640392 0.0902704 0.422414 0.25096 0.261676V0.261676Z"
+                                        fill="#D48080"
+                                    />
+                                </svg>
+                            </button>
+                            <button
+                                type="button"
+                                class="icon"
+                                @click="handlerEditMode"
+                                :class="state.editMode ? 'focusButton' : ''"
+                            >
+                                <svg
+                                    width="18"
+                                    height="12"
+                                    viewBox="0 0 18 12"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M17.7411 0.2459C17.5771 0.0884031 17.3553 0 17.1241 0C16.8929 0 16.671 0.0884031 16.507 0.2459L6.7921 9.58999L1.54078 4.51627C1.38061 4.34919 1.15831 4.25043 0.922775 4.2417C0.687241 4.23298 0.457767 4.31502 0.284836 4.46976C0.111904 4.62451 0.00968023 4.8393 0.000652761 5.06686C-0.00837471 5.29443 0.0765333 5.51615 0.236698 5.68323L6.7921 12L17.7411 1.44668C17.8231 1.36807 17.8883 1.27454 17.9327 1.17149C17.9771 1.06845 18 0.957921 18 0.84629C18 0.734658 17.9771 0.624131 17.9327 0.521084C17.8883 0.418038 17.8231 0.324512 17.7411 0.2459Z"
+                                        fill="#96D480"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </transition>
 
             <Card
-                color="happiness"
-                message="Hoje eu comi um lanche maravilhoso 😋. &#10;Perdi no bilhar 👆🏻👆🏻, para ELE 👈🏻👈🏻"
-                v-for="item in Array(5)"
-                :key="item"
+                color="love"
+                message="AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦.v AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦."
+                v-for="(item, index) in Array(5)"
+                :key="index"
             ></Card>
+
+            <Mask />
         </section>
-        <Mask />
     </main>
 </template>
 
 <script>
-import { reactive } from "vue";
-import { Header, Card, Mask } from "@/components";
+import { reactive, ref, watch } from "vue";
+import { Header, Mask, Card, PickColor } from "@/components";
 export default {
     name: "Panel",
     components: {
         Header,
         Card,
         Mask,
+        PickColor,
     },
-    setup() {
+    setup(p, context) {
+        const teste = ref(null);
         const state = reactive({
-            flipAdd: false,
+            flipAdd: true,
         });
-        return { state };
+
+        watch(
+            () => state.flipAdd,
+            (value) => {
+                console.log(context);
+                // if (!value) {
+                //     textareaRef.value.focus();
+                // }
+            }
+        );
+
+        function flipCard() {
+            state.flipAdd = false;
+        }
+        return {
+            state,
+            flipCard,
+            teste,
+        };
     },
 };
 </script>
@@ -90,12 +151,139 @@ main {
             align-items: center;
             position: relative;
             cursor: pointer;
+
             svg {
                 transition: all 300ms;
             }
             &:hover {
                 svg {
                     transform: scale(1.2);
+                }
+            }
+        }
+        .card-new-thought-on {
+            border-radius: 5px;
+            padding: 20px 30px;
+            background-color: $color-light-undefined;
+            width: 450px;
+            height: 210px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            caret-color: $theme-green-strong;
+
+            &::after {
+                content: "";
+                width: 10px;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                background-color: rgb(174, 174, 174);
+            }
+
+            .buttons {
+                border-top: 1px solid #ccc;
+                padding-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .confirmation {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .dropdown-colors {
+                background: #fff;
+                box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                padding: 8px 10px;
+                /* position: absolute; */
+                z-index: 10;
+                right: -8px;
+                top: 50px;
+                button {
+                    margin: 0 3px;
+                    width: 15px;
+                    height: 15px;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    border: none;
+                    transition: all 200ms ease;
+                    z-index: 9;
+                    &:hover {
+                        transform: scale(1.5);
+                    }
+                    &:active,
+                    &:focus {
+                        transform: scale(1.4);
+                    }
+                }
+            }
+
+            textarea {
+                width: 100%;
+                height: 100%;
+                color: $theme-green-strong;
+                border-radius: 10px;
+                font-family: "Didact Gothic", sans-serif;
+                line-height: 1.5;
+                margin-bottom: 5px;
+                resize: none;
+                background: transparent;
+                /* border: 1px solid transparent; */
+                font-size: 16px;
+                padding: 20px;
+                /* box-shadow: 0px 1px 10px -2px #8b8b8b; */
+                border: 1px solid transparent;
+            }
+
+            .icon {
+                background-color: $theme-white;
+                height: 30px;
+                width: 30px;
+                border-radius: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                outline: none;
+                box-shadow: 0px 1px 10px -2px #8b8b8b;
+                cursor: pointer;
+                border: 1px solid transparent;
+                transition: all 200ms ease;
+            }
+            .icon:first-child {
+                margin-right: 10px;
+            }
+            .icon:first-child,
+            .icon:last-child {
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            .icon:first-child:hover,
+            .icon:last-child:hover {
+                transform: scale(1.2);
+            }
+            .icon:first-child:hover {
+                svg path {
+                    fill: #e63a3a;
+                }
+            }
+            .icon:last-child:hover {
+                svg path {
+                    fill: #54b504;
                 }
             }
         }

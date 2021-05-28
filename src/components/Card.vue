@@ -1,11 +1,13 @@
 <template>
     <span class="separator"></span>
-    <div class="card" :class="[state.color, state.editMode ? 'floatMask':'']">
+    <div class="card" :class="[state.color, state.editMode ? 'floatMask' : '']">
         <textarea
             ref="textareaRef"
             name="message"
             :class="state.editMode ? 'editMode' : ''"
-            v-model="message">
+            v-model="message"
+            @input.passive="handlerInput($event.target)"
+        >
         </textarea>
         <div class="icons">
             <button type="button" class="icon">
@@ -22,7 +24,12 @@
                     />
                 </svg>
             </button>
-            <button type="button" class="icon" @click="handlerEditMode" :class="state.editMode ? 'focusButton' : ''">
+            <button
+                type="button"
+                class="icon"
+                @click="handlerEditMode"
+                :class="state.editMode ? 'focusButton' : ''"
+            >
                 <svg
                     width="15"
                     height="15"
@@ -37,15 +44,7 @@
                 </svg>
             </button>
             <transition name="fade" mode="in-out">
-                <div class="dropdown-colors" v-if="state.editMode">
-                    <button class="undefined" @click="setNewCardColor('undefined')"></button>
-                    <button class="anger" @click="setNewCardColor('anger')"></button>
-                    <button class="happiness" @click="setNewCardColor('happiness')"></button>
-                    <button class="sadness" @click="setNewCardColor('sadness')"></button>
-                    <button class="fear" @click="setNewCardColor('fear')"></button>
-                    <button class="disgusted" @click="setNewCardColor('disgusted')"></button>
-                    <button class="love" @click="setNewCardColor('love')"></button>
-                </div>
+                <pick-color :editMode="state.editMode" :color="state.color" @emittedColor="newColorCard"/>
             </transition>
         </div>
     </div>
@@ -53,7 +52,8 @@
 
 <script>
 import { reactive, ref, watch } from "vue";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
+import PickColor from "./PickColor";
 export default {
     name: "Card",
     props: {
@@ -66,93 +66,64 @@ export default {
             default: "",
         },
     },
+    components: {
+        PickColor,
+    },
     setup(props) {
         const state = reactive({
             editMode: false,
-			color: props.color
+            color: props.color,
         });
         const store = useStore();
-		const textareaRef = ref(null);
+        const textareaRef = ref(null);
 
-		watch(() => state.editMode, (value) => {
-			if(value) {
-				textareaRef.value.removeAttribute('readonly');
-				textareaRef.value.focus();
-			} else {
-				textareaRef.value.setAttribute('readonly', true);
-			}
-            store.commit('changeCardState', value);
-		});
-
-        watch(() => store.state.card.showMaskEditMode, (value) => {
-            if(!value) {
-                state.editMode = false;
+        watch(
+            () => state.editMode,
+            (value) => {
+                if (value) {
+                    textareaRef.value.removeAttribute("readonly");
+                    textareaRef.value.focus();
+                } else {
+                    textareaRef.value.setAttribute("readonly", true);
+                }
+                store.commit("changeCardState", value);
             }
-        });
+        );
+
+        watch(
+            () => store.state.card.showMaskEditMode,
+            (value) => {
+                if (!value) {
+                    state.editMode = false;
+                }
+            }
+        );
 
         function handlerEditMode() {
             state.editMode = !state.editMode;
         }
 
-		function setNewCardColor(color) {
-			state.color = color;
-		}
+        function newColorCard(value) {
+             state.color = value;
+        }
+
+        function handlerInput(target) {
+            target.style.height = `auto`;
+            target.style.height = `${target.scrollHeight}px`;
+        }
 
         return {
             state,
             handlerEditMode,
-			textareaRef,
-			setNewCardColor
+            textareaRef,
+            handlerInput,
+            newColorCard
         };
     },
 };
 </script>
 
 <style lang="scss">
-//colors
-.undefined {
-    background-color: $color-light-undefined;
-    &::before {
-        background-color: $color-undefined;
-    }
-}
-.love {
-    background-color: $color-light-love;
-    &::before {
-        background-color: $color-love;
-    }
-}
-.anger {
-    background-color: $color-light-anger;
-    &::before {
-        background-color: $color-anger;
-    }
-}
-.happiness {
-    background-color: $color-light-happiness;
-    &::before {
-        background-color: $color-happiness;
-    }
-}
-.sadness {
-    background-color: $color-light-sadness;
-    &::before {
-        background-color: $color-sadness;
-    }
-}
-.fear {
-    background-color: $color-light-fear;
-    &::before {
-        background-color: $color-fear;
-    }
-}
-.disgusted {
-    background-color: $color-light-disgusted;
-    &::before {
-        background-color: $color-disgusted;
-    }
-}
-
 //card
 .card {
     padding: 20px 40px;
@@ -171,11 +142,13 @@ export default {
         font-size: 16px;
         padding: 20px;
         border-radius: 10px;
+        overflow: hidden;
+        height: auto;
 
         &.editMode {
-          box-shadow: 0px 1px 6px 1px rgba(163,163,163,0.34);
-          border: 1px solid #fff;
-           caret-color:$theme-green-strong;
+            box-shadow: 0px 1px 6px 1px rgba(163, 163, 163, 0.34);
+            border: 1px solid #fff;
+            caret-color: $theme-green-strong;
         }
     }
 
@@ -259,11 +232,13 @@ export default {
         .icon:first-child {
             margin-right: 10px;
         }
-        .icon:first-child, .icon:last-child {
+        .icon:first-child,
+        .icon:last-child {
             background-repeat: no-repeat;
             background-position: center;
         }
-        .icon:first-child:hover, .icon:last-child:hover {
+        .icon:first-child:hover,
+        .icon:last-child:hover {
             transform: scale(1.2);
             svg path {
                 fill: $theme-green-strong;
@@ -279,11 +254,13 @@ export default {
     }
 
     //animation
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s ease;
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s ease;
     }
 
-    .fade-enter-from, .fade-leave-to {
+    .fade-enter-from,
+    .fade-leave-to {
         opacity: 0;
     }
 }

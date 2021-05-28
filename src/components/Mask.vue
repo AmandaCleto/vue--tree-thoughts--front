@@ -19,13 +19,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.mask {
-		// background: transparent;
-		background: #80008063;
+		background: transparent;
 		position: fixed;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		right: 0;
+		width: 100vw;
+		height: calc(100% + 80px);
+		top: -80px;
+		right: 50%;
+		transform: translateX(50%);
 		z-index: 10;
 	}
 </style>

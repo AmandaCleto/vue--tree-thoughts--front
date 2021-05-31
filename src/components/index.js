@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Mask from '@/components/Mask';
 import PickColor from '@/components/PickColor';
+import Textarea from '@/components/Textarea';
 
 export {
   Card,
@@ -11,5 +12,6 @@ export {
   Header,
   Input,
   Mask,
-  PickColor
+  PickColor,
+  Textarea
 };

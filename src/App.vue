@@ -40,48 +40,47 @@ body {
 	}
 }
 
-
 //colors
 .undefined {
-    background-color: $color-light-undefined;
+    background-color: $color-light-undefined !important;
     &::before {
-        background-color: $color-undefined;
+        background-color: $color-undefined !important;
     }
 }
 .love {
-    background-color: $color-light-love;
+    background-color: $color-light-love !important;
     &::before {
-        background-color: $color-love;
+        background-color: $color-love !important;
     }
 }
 .anger {
-    background-color: $color-light-anger;
+    background-color: $color-light-anger !important;
     &::before {
-        background-color: $color-anger;
+        background-color: $color-anger !important;
     }
 }
 .happiness {
-    background-color: $color-light-happiness;
+    background-color: $color-light-happiness !important;
     &::before {
-        background-color: $color-happiness;
+        background-color: $color-happiness !important;
     }
 }
 .sadness {
-    background-color: $color-light-sadness;
+    background-color: $color-light-sadness !important;
     &::before {
-        background-color: $color-sadness;
+        background-color: $color-sadness !important;
     }
 }
 .fear {
-    background-color: $color-light-fear;
+    background-color: $color-light-fear !important;
     &::before {
-        background-color: $color-fear;
+        background-color: $color-fear !important;
     }
 }
 .disgusted {
-    background-color: $color-light-disgusted;
+    background-color: $color-light-disgusted !important;
     &::before {
-        background-color: $color-disgusted;
+        background-color: $color-disgusted !important;
     }
 }
 

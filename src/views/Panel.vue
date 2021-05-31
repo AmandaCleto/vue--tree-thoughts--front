@@ -1,8 +1,7 @@
 <template>
     <main>
         <Header name="Amanda Ackerman" />
-
-        <section class="container" ref="teste">
+        <section class="container">
             <transition name="flip" mode="out-in">
                 <div
                     class="card-new-thought"
@@ -25,18 +24,13 @@
                     </svg>
                 </div>
 
-                <div v-else class="card-new-thought-on">
-                    <textarea
-                        name="card-new-thought-on"
-                        cols="30"
-                        rows="10"
-                        placeholder="Qual a novidade? Conte ai!"
-                    ></textarea>
+                <div v-else class="card-new-thought-on" :class="[state.color]">
+                    <Textarea :editMode="true" cols="30" rows="10"/>
                     <div class="buttons">
-                        <pick-color />
+                       <pick-color :editMode="true" :color="state.color" @emittedColor="newColorCard" />
 
                         <div class="confirmation">
-                            <button type="button" class="icon">
+                            <button type="button" class="icon" @click="flipCard()">
                                 <svg
                                     width="13"
                                     height="12"
@@ -76,7 +70,7 @@
 
             <Card
                 color="love"
-                message="AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦.v AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦. AEEE um Graúna!!! 🐦."
+                message="Ou ele faz thu u u um pá pegar. Ou ele faz thu-vum-vum-vum e não pega. Ou ele faz thu u u um pá pegar. Ou ele faz thu-vum-vum-vum e não pega. Tak Tak Tak e não pega.. Tak Tak Tak e não pega.."
                 v-for="(item, index) in Array(5)"
                 :key="index"
             ></Card>
@@ -87,8 +81,10 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
-import { Header, Mask, Card, PickColor } from "@/components";
+import { reactive, watch } from "vue";
+import { useStore } from "vuex";
+import { Header, Mask, Card, PickColor, Textarea } from "@/components";
+
 export default {
     name: "Panel",
     components: {
@@ -96,30 +92,50 @@ export default {
         Card,
         Mask,
         PickColor,
+        Textarea
     },
-    setup(p, context) {
-        const teste = ref(null);
+
+    setup() {
         const state = reactive({
             flipAdd: true,
+            editMode: false,
+            color:  '',
         });
+        const store = useStore();
+
+        function flipCard() {
+            state.flipAdd = !state.flipAdd;
+        }
 
         watch(
-            () => state.flipAdd,
+            () => state.editMode,
             (value) => {
-                console.log(context);
-                // if (!value) {
-                //     textareaRef.value.focus();
-                // }
+                store.commit("changeCardState", value);
             }
         );
 
-        function flipCard() {
-            state.flipAdd = false;
+        watch(
+            () => store.state.card.showMaskEditMode,
+            (value) => {
+                if (!value) {
+                    state.editMode = false;
+                }
+            }
+        );
+
+        function handlerEditMode() {
+            state.editMode = !state.editMode;
         }
+
+        function newColorCard(value) {
+            state.color = value;
+        }
+
         return {
             state,
             flipCard,
-            teste,
+            handlerEditMode,
+            newColorCard,
         };
     },
 };
@@ -145,7 +161,7 @@ main {
             background: url("~@/assets/new-thought.svg") no-repeat center;
             border-radius: 5px;
             width: 450px;
-            height: 270px;
+            height: 210px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -174,7 +190,7 @@ main {
             position: relative;
             caret-color: $theme-green-strong;
 
-            &::after {
+            &::before {
                 content: "";
                 width: 10px;
                 height: 100%;
@@ -194,59 +210,19 @@ main {
                 justify-content: space-between;
                 width: 100%;
                 margin-top: 10px;
+
+                .dropdown-colors {
+                    position: initial !important;
+                    &::before {
+                        content: none;
+                    }
+                }
             }
 
             .confirmation {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-            }
-
-            .dropdown-colors {
-                background: #fff;
-                box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                padding: 8px 10px;
-                /* position: absolute; */
-                z-index: 10;
-                right: -8px;
-                top: 50px;
-                button {
-                    margin: 0 3px;
-                    width: 15px;
-                    height: 15px;
-                    cursor: pointer;
-                    border-radius: 50%;
-                    border: none;
-                    transition: all 200ms ease;
-                    z-index: 9;
-                    &:hover {
-                        transform: scale(1.5);
-                    }
-                    &:active,
-                    &:focus {
-                        transform: scale(1.4);
-                    }
-                }
-            }
-
-            textarea {
-                width: 100%;
-                height: 100%;
-                color: $theme-green-strong;
-                border-radius: 10px;
-                font-family: "Didact Gothic", sans-serif;
-                line-height: 1.5;
-                margin-bottom: 5px;
-                resize: none;
-                background: transparent;
-                /* border: 1px solid transparent; */
-                font-size: 16px;
-                padding: 20px;
-                /* box-shadow: 0px 1px 10px -2px #8b8b8b; */
-                border: 1px solid transparent;
             }
 
             .icon {

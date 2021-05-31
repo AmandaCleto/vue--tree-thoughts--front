@@ -1,14 +1,7 @@
 <template>
     <span class="separator"></span>
     <div class="card" :class="[state.color, state.editMode ? 'floatMask' : '']">
-        <textarea
-            ref="textareaRef"
-            name="message"
-            :class="state.editMode ? 'editMode' : ''"
-            v-model="message"
-            @input.passive="handlerInput($event.target)"
-        >
-        </textarea>
+        <Textarea :message="message" :editMode="state.editMode" />
         <div class="icons">
             <button type="button" class="icon">
                 <svg
@@ -51,9 +44,11 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
+import { reactive, watch } from "vue";
 import { useStore } from "vuex";
 import PickColor from "./PickColor";
+import Textarea from './Textarea';
+
 export default {
     name: "Card",
     props: {
@@ -68,6 +63,7 @@ export default {
     },
     components: {
         PickColor,
+        Textarea
     },
     setup(props) {
         const state = reactive({
@@ -75,17 +71,10 @@ export default {
             color: props.color,
         });
         const store = useStore();
-        const textareaRef = ref(null);
 
         watch(
             () => state.editMode,
             (value) => {
-                if (value) {
-                    textareaRef.value.removeAttribute("readonly");
-                    textareaRef.value.focus();
-                } else {
-                    textareaRef.value.setAttribute("readonly", true);
-                }
                 store.commit("changeCardState", value);
             }
         );
@@ -104,19 +93,12 @@ export default {
         }
 
         function newColorCard(value) {
-             state.color = value;
-        }
-
-        function handlerInput(target) {
-            target.style.height = `auto`;
-            target.style.height = `${target.scrollHeight}px`;
+            state.color = value;
         }
 
         return {
             state,
             handlerEditMode,
-            textareaRef,
-            handlerInput,
             newColorCard
         };
     },
@@ -126,31 +108,10 @@ export default {
 <style lang="scss">
 //card
 .card {
-    padding: 20px 40px;
+    padding: 20px 30px;
     width: 450px;
     position: relative;
     border-radius: 5px;
-    textarea {
-        color: #5f5f5f;
-        font-family: "Didact Gothic", sans-serif;
-        line-height: 1.5;
-        margin-bottom: 5px;
-        resize: none;
-        width: 100%;
-        background: none;
-        border: 1px solid transparent;
-        font-size: 16px;
-        padding: 20px;
-        border-radius: 10px;
-        overflow: hidden;
-        height: auto;
-
-        &.editMode {
-            box-shadow: 0px 1px 6px 1px rgba(163, 163, 163, 0.34);
-            border: 1px solid #fff;
-            caret-color: $theme-green-strong;
-        }
-    }
 
     &.floatMask {
         z-index: 15;
@@ -167,48 +128,6 @@ export default {
         border-bottom-left-radius: 5px;
     }
 
-    .dropdown-colors {
-        background: #fff;
-        box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        padding: 8px 10px;
-        position: absolute;
-        z-index: 10;
-        right: -8px;
-        top: 50px;
-        button {
-            margin: 0 3px;
-            width: 15px;
-            height: 15px;
-            cursor: pointer;
-            border-radius: 50%;
-            border: none;
-            transition: all 200ms ease;
-            z-index: 9;
-            &:hover {
-                transform: scale(1.5);
-            }
-            &:active,
-            &:focus {
-                transform: scale(1.4);
-            }
-        }
-        &:after {
-            content: "";
-            width: 15px;
-            height: 15px;
-            border-radius: 4px;
-            background: #fff;
-            display: block;
-            position: absolute;
-            top: -7px;
-            right: 15px;
-            transform: rotate(45deg);
-            z-index: 8;
-        }
-    }
     .icons {
         display: flex;
         align-items: center;

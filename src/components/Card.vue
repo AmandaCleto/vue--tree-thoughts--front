@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { reactive, watch } from "vue";
+import { reactive, watch, ref } from "vue";
 import { useStore } from "vuex";
 import PickColor from "./PickColor";
 import Textarea from './Textarea';

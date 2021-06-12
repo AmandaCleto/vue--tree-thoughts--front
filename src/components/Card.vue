@@ -1,6 +1,7 @@
 <template>
     <span class="separator"></span>
     <div class="card" :class="[state.color, state.editMode ? 'floatMask' : '']">
+        <p class="date">{{postDate}}</p>
         <Textarea :message="message" :editMode="state.editMode" />
         <div class="icons">
             <button type="button" class="icon">
@@ -60,6 +61,10 @@ export default {
             type: String,
             default: "",
         },
+        postDate: {
+            type: String,
+            default: "",
+        }
     },
     components: {
         PickColor,
@@ -112,6 +117,13 @@ export default {
     width: 450px;
     position: relative;
     border-radius: 5px;
+
+    .date {
+        position: absolute;
+        top: -30px;
+        left: 0;
+        color: #9B9B9B;
+    }
 
     &.floatMask {
         z-index: 15;

@@ -70,9 +70,10 @@
 
             <Card
                 color="love"
-                message="Ou ele faz thu u u um pá pegar. Ou ele faz thu-vum-vum-vum e não pega. Ou ele faz thu u u um pá pegar. Ou ele faz thu-vum-vum-vum e não pega. Tak Tak Tak e não pega.. Tak Tak Tak e não pega.."
+                message="Sextou, com S de: Seguimos o padrão e fomos de hype chicken; Surpreendemos com o trento de torta de maça; Seguimos em frente com o projeto e Sssiistiremos Haikyuu ahusuahs"
                 v-for="(item, index) in Array(5)"
                 :key="index"
+                postDate="12/06/2021"
             ></Card>
 
             <Mask />

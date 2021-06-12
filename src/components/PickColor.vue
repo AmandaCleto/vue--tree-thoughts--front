@@ -7,13 +7,12 @@
         <div class="animationWrapper">
             <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'undefined')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
                 :width="150"
                 :height="150"
-                ref="refAnimaParty"
             />
             <button
                 class="undefined"
@@ -23,16 +22,15 @@
         </div>
 
         <div class="animationWrapper">
-            <!-- <lottie-animation
+            <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'anger')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
-                :width="100"
-                :height="100"
-                ref="refAnimaParty"
-            /> -->
+                :width="150"
+                :height="150"
+            />
             <button
                 class="anger"
                 @mouseover="viewNewCardColor('anger')"
@@ -41,16 +39,15 @@
         </div>
 
         <div class="animationWrapper">
-            <!-- <lottie-animation
+            <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'happiness')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
-                :width="100"
-                :height="100"
-                ref="refAnimaParty"
-            /> -->
+                :width="150"
+                :height="150"
+            />
             <button
                 class="happiness"
                 @mouseover="viewNewCardColor('happiness')"
@@ -59,16 +56,15 @@
         </div>
 
         <div class="animationWrapper">
-            <!-- <lottie-animation
+            <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'sadness')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
-                :width="100"
-                :height="100"
-                ref="refAnimaParty"
-            /> -->
+                :width="150"
+                :height="150"
+            />
             <button
                 class="sadness"
                 @mouseover="viewNewCardColor('sadness')"
@@ -77,16 +73,15 @@
         </div>
 
         <div class="animationWrapper">
-            <!-- <lottie-animation
+            <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'fear')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
-                :width="100"
-                :height="100"
-                ref="refAnimaParty"
-            /> -->
+                :width="150"
+                :height="150"
+            />
             <button
                 class="fear"
                 @mouseover="viewNewCardColor('fear')"
@@ -95,16 +90,15 @@
         </div>
 
         <div class="animationWrapper">
-            <!-- <lottie-animation
+            <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'disgusted')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
-                :width="100"
-                :height="100"
-                ref="refAnimaParty"
-            /> -->
+                :width="150"
+                :height="150"
+            />
             <button
                 class="disgusted"
                 @mouseover="viewNewCardColor('disgusted')"
@@ -113,16 +107,15 @@
         </div>
 
         <div class="animationWrapper">
-            <!-- <lottie-animation
+            <lottie-animation
                 path="partyAnimation.json"
-                @AnimControl="setAnimController"
+                @AnimControl="(anim) => setAnimController(anim, 'love')"
                 :autoPlay="false"
                 :loop="false"
                 class="partyAnimation"
-                :width="100"
-                :height="100"
-                ref="refAnimaParty"
-            /> -->
+                :width="150"
+                :height="150"
+            />
             <button
                 class="love"
                 @mouseover="viewNewCardColor('love')"
@@ -156,24 +149,22 @@ export default {
         const state = reactive({
             editMode: props.editMode,
             currentColor: props.color,
-            animaParty: null,
+            animaParty: {
+                undefined: null,
+                anger: null,
+                happiness: null,
+                sadness: null,
+                fear: null,
+                disgusted: null,
+                love: null,
+            }
         });
-        const refAnimaParty = ref();
+        const refAnimaParty = ref([]);
 
         watch(
             () => props.editMode,
             (newValue) => {
                 state.editMode = newValue;
-            }
-        );
-
-        watch(
-            () => state.animaParty,
-            () => {
-                state.animaParty.onComplete = function () {
-                    refAnimaParty.value.style.opacity = 0;
-                    state.animaParty.goToAndStop(0);
-                };
             }
         );
 
@@ -185,14 +176,18 @@ export default {
         function setNewCardColor(color) {
             if (color) {
                 state.currentColor = color;
-                refAnimaParty.value.style.opacity = 1;
-                state.animaParty.play();
+                state.animaParty[color].wrapper.style.opacity = 1;
+                state.animaParty[color].play();
             }
             context.emit("emittedColor", state.currentColor);
         }
 
-        function setAnimController(animaParty) {
-            state.animaParty = animaParty;
+        function setAnimController(animaParty, index) {
+            state.animaParty[index] = animaParty;
+            state.animaParty[index].onComplete = function () {
+                state.animaParty[index].wrapper.style.opacity = 0;
+                state.animaParty[index].goToAndStop(0);
+            };
         }
 
         return {
@@ -244,6 +239,8 @@ export default {
             transform: translate(-50%, -50%);
             pointer-events: none;
             opacity: 0;
+            z-index: 20;
+            transition: opacity 300ms;
         }
         button {
             margin: 0 5px;

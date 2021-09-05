@@ -1,6 +1,6 @@
 <template>
     <main>
-        <Header name="Amanda Ackerman" />
+        <Header :name="state.user.name" />
         <section class="container">
             <transition name="flip" mode="out-in">
                 <div
@@ -82,9 +82,10 @@
 </template>
 
 <script>
-import { reactive, watch } from "vue";
+import { reactive, watch, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import { Header, Mask, Card, PickColor, Textarea } from "@/components";
+import { api } from "../config/axios";
 
 export default {
     name: "Panel",
@@ -101,6 +102,9 @@ export default {
             flipAdd: true,
             editMode: false,
             color:  '',
+            user: {
+                name: ''
+            }
         });
         const store = useStore();
 
@@ -131,6 +135,20 @@ export default {
         function newColorCard(value) {
             state.color = value;
         }
+
+        onBeforeMount(() => {
+            const token = sessionStorage.getItem('token');
+
+            api.get('/user', {
+                headers: {
+                    authorization: token
+                }
+            }).then(({data: {getUser}}) => {
+                state.user.name = getUser.name;
+            }).catch((error) => {
+                console.log(error);
+            })
+        });
 
         return {
             state,

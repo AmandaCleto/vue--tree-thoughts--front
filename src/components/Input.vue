@@ -11,10 +11,11 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 
 export default {
   name: 'Input',
+  emits: ['input'],
   props: {
     label: String,
     type: String,
@@ -25,7 +26,7 @@ export default {
       iconEyeOpened: require('../assets/eye.svg'),
     }
   },
-  setup(props) {
+  setup(props, {emit}) {
     const state = reactive({
       value: '',
       hideEye: true,
@@ -39,8 +40,12 @@ export default {
       } else {
         state.passwordFieldType = 'text';
       }
-      console.log(state.passwordFieldType);
     }
+
+    watch(() => state.value, (value) => {
+        emit('input', value);
+    });
+
     return { hidePassword, state };
   },
 }

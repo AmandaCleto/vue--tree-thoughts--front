@@ -8,7 +8,7 @@
           <figcaption>
             {{name}}
           </figcaption>
-          <img src="../assets/mikasa.png" :alt="`Imagem de perfil de ${name}`">
+          <img :src="`https://source.boringavatars.com/beam/66/${name}?colors=DDDCDC,D48080,ECD975,80C5D4,A580D4,96D480,D480A8`" :alt="`Imagem de perfil de ${name}`">
         </figure>
       </div>
   </header>

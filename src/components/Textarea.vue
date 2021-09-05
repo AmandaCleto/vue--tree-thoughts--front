@@ -3,7 +3,7 @@
 		ref="textareaRef"
 		name="message"
 		:class="editMode ? 'editMode' : ''"
-		v-model="message"
+		v-model="description"
 		readonly
 		@input.passive="handlerInput($event.target)"
 		placeholder="Qual a novidade? Conte ai!"
@@ -28,7 +28,7 @@ function changeReadOnlyTextArea(editMode, element) {
 export default {
 	name: 'Textarea',
 	props: {
-		message: {
+		description: {
 			type: String,
 		},
 		editMode: {

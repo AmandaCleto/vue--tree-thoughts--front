@@ -109,8 +109,8 @@ export default {
                 headers: {
                     authorization: token
                 }
-            }).then(({data: {doesThoughtCreated}}) => {
-                state.thoughts.unshift(doesThoughtCreated);
+            }).then(({data: {wasThoughtCreated}}) => {
+                state.thoughts.unshift(wasThoughtCreated);
                 flipCard();
             }).catch((error) => {
                 console.error(error);
@@ -143,8 +143,8 @@ export default {
                 headers: {
                     authorization: token
                 }
-            }).then(({data: {doesThoughtFound}}) => {
-                state.thoughts = doesThoughtFound;
+            }).then(({data: {wasThoughtFound}}) => {
+                state.thoughts = wasThoughtFound;
             }).catch((error) => {
                 console.error(error);
             })

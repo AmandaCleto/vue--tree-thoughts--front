@@ -34,7 +34,7 @@
             </transition>
             <Card
                 v-for="(item, index) in state.thoughts"
-                color="love"
+                :color="item.emotions.name"
                 :description="item.description"
                 :key="index"
                 :postDate="datetimeToPtBr(item.create_at)"

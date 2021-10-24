@@ -37,7 +37,7 @@
                 :color="item.emotions.name"
                 :description="item.description"
                 :key="index"
-                :postDate="datetimeToPtBr(item.create_at)"
+                :postDate="datetimeToPtBr(item.createdAt)"
             ></Card>
 
             <Mask />
@@ -110,7 +110,11 @@ export default {
                     authorization: token
                 }
             }).then(({data: {wasThoughtCreated}}) => {
-                state.thoughts = state.thoughts.unshift(wasThoughtCreated);
+                wasThoughtCreated.emotions = {
+                    name: state.newThought.color,
+                };
+
+                state.thoughts.unshift(wasThoughtCreated);
                 flipCard();
             }).catch((error) => {
                 console.error(error);

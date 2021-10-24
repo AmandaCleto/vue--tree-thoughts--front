@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { reactive, watch, ref } from "vue";
+import { reactive, watch, watchEffect } from "vue";
 import { useStore } from "vuex";
 import PickColor from "./PickColor";
 import Textarea from './Textarea';
@@ -44,6 +44,7 @@ export default {
             default: "",
         }
     },
+
     components: {
         PickColor,
         Textarea
@@ -54,6 +55,8 @@ export default {
             color: props.color,
         });
         const store = useStore();
+
+        watchEffect(() => state.color = props.color);
 
         watch(
             () => state.editMode,

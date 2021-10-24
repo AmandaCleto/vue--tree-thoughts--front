@@ -110,7 +110,7 @@ export default {
                     authorization: token
                 }
             }).then(({data: {wasThoughtCreated}}) => {
-                state.thoughts.unshift(wasThoughtCreated);
+                state.thoughts = state.thoughts.unshift(wasThoughtCreated);
                 flipCard();
             }).catch((error) => {
                 console.error(error);
@@ -172,6 +172,7 @@ main {
         flex-direction: column;
         width: 100%;
         max-width: 992px;
+        min-height: 100vh;
         background: rgba(247, 244, 234, 0.45);
         backdrop-filter: blur(15px);
         padding: 65px 40px;

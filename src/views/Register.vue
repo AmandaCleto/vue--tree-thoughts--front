@@ -6,20 +6,20 @@
                 <p class="informative">Cadastre-se para começar.</p>
             </template>
             <template v-slot:inputs>
-                <Input label="Nome" type="text" />
-                <Input label="E-mail" type="email" />
-                <Input label="Senha" type="password" />
-                <Input label="Confirmar Senha" type="password" />
+                <Input label="Nome" type="text" name="name" @input="(value) => state.name = value" />
+                <Input label="E-mail" type="email" name="email" @input="(value) => state.email = value" />
+                <Input label="Senha" type="password" name="password" @input="(value) => state.password = value" />
+                <Input label="Confirmar Senha" type="password" name="confirm_password" @input="(value) => state.confirm_password = value" />
             </template>
             <template v-slot:button_action>
-                <button class="button_enter" v-on:click="login">
+                <button class="button_enter" v-on:click="register">
                     Cadastrar
                 </button>
             </template>
             <template v-slot:footer>
                 <p class="footer">
                     Já tem uma conta?
-                    <a href="#" v-on:click.prevent="login">Clique aqui</a>
+                    <a href="#" v-on:click.prevent="goToLogin">Clique aqui</a>
                 </p>
             </template>
         </Form>
@@ -30,6 +30,8 @@
 // @ is an alias to /src
 import { Form, Input } from "@/components";
 import router from "@/router";
+import { api } from "../config/axios";
+import { reactive } from "vue";
 
 export default {
     name: "Register",
@@ -38,10 +40,36 @@ export default {
         Input,
     },
     setup() {
-        function login() {
-            router.push({ name: "Panel" });
+        const state = reactive({
+            name: "",
+            email: "",
+            password: "",
+            confirm_password: "",
+        });
+
+        function goToLogin() {
+            router.push({ name: "Login" });
         }
-        return { login };
+
+        function register() {
+            if(state.password !== state.confirm_password) {
+                return alert('Senhas não coincidem');
+            }
+
+            api.post("user", {
+                name: state.name,
+                email: state.email,
+                password: state.password,
+            })
+            .then(({data}) => {
+                sessionStorage.setItem('token', `Bearer ${data.token}`);
+                router.push({ name: "Panel" });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+        return { goToLogin, register, state };
     },
 };
 </script>

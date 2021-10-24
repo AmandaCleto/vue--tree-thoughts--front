@@ -1,8 +1,8 @@
 <template>
   <div class="input-component">
     <div class="input" :class="state.value ? 'fulfilled': ''">
-      <label :for="type" >{{label}}</label>
-      <input :type="state.passwordFieldType" name="email" @input="state.value = $event.target.value" :id="type" >
+      <label :for="name" >{{label}}</label>
+      <input :type="state.passwordFieldType" :name="name" @input="state.value = $event.target.value" :id="name" >
     </div>
     <button class="eye" v-on:click="hidePassword" v-if="type == 'password'">
       <img :src="state.hideEye ? iconEyeClosed : iconEyeOpened" alt="icone de olho">
@@ -19,6 +19,7 @@ export default {
   props: {
     label: String,
     type: String,
+    name: String
   },
   data() {
     return {

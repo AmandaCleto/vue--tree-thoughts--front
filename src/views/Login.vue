@@ -6,8 +6,8 @@
                 <p class="informative">Acesse sua conta para continuar.</p>
             </template>
             <template v-slot:inputs>
-                <Input label="E-mail" type="email" @input="(value) => state.email = value"  />
-                <Input label="Senha" type="password" @input="(value) => state.password = value" />
+                <Input label="E-mail" type="email" @input="(value) => state.email = value" name="email"  />
+                <Input label="Senha" type="password" @input="(value) => state.password = value" name="password" />
             </template>
             <template v-slot:button_action>
                 <button class="button_enter" v-on:click="authenticate">
@@ -17,7 +17,7 @@
             <template v-slot:footer>
                 <p>
                     Não possui uma conta?
-                    <a href="#" v-on:click.prevent="register">Clique aqui</a>
+                    <a href="#" v-on:click.prevent="goToRegister">Clique aqui</a>
                 </p>
             </template>
         </Form>
@@ -48,13 +48,13 @@ export default {
                 email: state.email,
                 password: state.password,
             })
-                .then(({data}) => {
-                    sessionStorage.setItem('token', `Bearer ${data.token}`);
-                    router.push({ name: "Panel" });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            .then(({data}) => {
+                sessionStorage.setItem('token', `Bearer ${data.token}`);
+                router.push({ name: "Panel" });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         }
 
         function goToRegister() {
